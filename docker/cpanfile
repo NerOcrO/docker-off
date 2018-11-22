@@ -1,0 +1,44 @@
+# This file allows to get the last module's version.
+
+# Available as Debian packages.
+requires 'Algorithm::Dependency', '== 1.110';
+requires 'Apache2::Reload';
+#requires 'Barcode::ZBar', '== 0.04';
+requires 'Cache::Memcached::Fast';
+requires 'CGI';
+requires 'Clone';
+requires 'Crypt::PasswdMD5';
+requires 'Data::MessagePack', '== 1.00';
+requires 'DateTime';
+requires 'Email::Stuffer';
+requires 'Encode::Detect';
+requires 'File::Find::Rule';
+requires 'Geo::IP';
+requires 'Graphics::Color';
+#requires 'Image::Magick', '== 6.89';
+requires 'JSON';
+requires 'Locale::Maketext::Lexicon';
+requires 'Log::Log4perl';
+requires 'Log::Any';
+requires 'Log::Any::Adapter::Log4perl';
+requires 'Modern::Perl', '== 1.20181021';
+requires 'Module::Install';
+# TODO: Switch to latest version: change all 'count' deprecated method.
+requires 'MongoDB', '== 1.8.3';
+requires 'Text::Unaccent';
+requires 'URI::Escape::XS';
+requires 'URI::Find';
+#requires 'XML::Encoding', '== 2.09';
+requires 'XML::Simple';
+
+# Not available as Debian packages.
+requires 'Algorithm::CheckDigits';
+requires 'CLDR::Number';
+requires 'Crypt::ScryptKDF';
+requires 'Data::MessagePack';
+requires 'Email::IsEmail';
+requires 'Encode::Punycode';
+requires 'GraphViz2';
+requires 'Image::OCR::Tesseract';
+requires 'Locale::Maketext::Lexicon::Getcontext';
+requires 'Math::Random::Secure';
