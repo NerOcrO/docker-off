@@ -2,10 +2,12 @@ version: "3.7"
 services:
   mongo:
     image: mongo:4.0
+    container_name: mongo
     ports:
       - 27017:27017
   apache:
     build: docker
+    container_name: apache
     depends_on: [mongo]
     ports:
       - 8080:8080
@@ -21,6 +23,7 @@ services:
         target: /var/www/html/lib/ProductOpener/Config2.pm
   nginx:
     image: nginx:1.15
+    container_name: nginx
     depends_on: [apache]
     ports:
       - 80:80
@@ -28,3 +31,6 @@ services:
       - type: bind
         source: ./docker/etc/nginx/conf.d
         target: /etc/nginx/conf.d
+      - type: bind
+        source: ./openfoodfacts-server/logs
+        target: /var/www/html/html/logs

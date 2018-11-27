@@ -17,9 +17,9 @@ RUN apt-get update && apt-get install -y \
   && apt-get purge -y --auto-remove \
   && rm -rf /var/lib/apt/lists/*
 
-ENV OFF_DATA_ROOT /var/www/html
+ENV OFF_ROOT=/var/www/html
 
-WORKDIR $OFF_DATA_ROOT
+WORKDIR $OFF_ROOT
 
 COPY cpanfile .
 
@@ -31,13 +31,14 @@ RUN \
   a2enconf off.conf \
   && a2ensite off.conf
 
-ENV PERL5LIB $OFF_DATA_ROOT/lib
-ENV OFF_WWW_ROOT $OFF_DATA_ROOT/html
-ENV OFF_SERVER_DOMAIN off.localhost
-ENV OFF_SSL_SUBDOMAINS *
-ENV OFF_MONGODB off
-ENV OFF_MONGODB_HOST mongodb://mongo
-ENV OFF_MEMCACHE_SERVERS 127.0.0.1:11211
-ENV OFF_APACHE_PORT 8080
+ENV PERL5LIB=$OFF_ROOT/lib
+ENV OFF_DOCUMENT_ROOT=$OFF_ROOT/html
+ENV OFF_SERVER_NAME=openfoodfacts.localhost
+ENV OFF_SSL_SUBDOMAINS=*
+ENV OFF_MONGODB_USER=off
+ENV OFF_MONGODB_HOST=mongodb://mongo
+ENV OFF_MEMCACHE_SERVERS=127.0.0.1:11211
+ENV OFF_APACHE_PORT=8080
+ENV OFF_SERVER_ADMIN=contact@openfoodfacts.org
 
 ENTRYPOINT ["apache2ctl", "-DFOREGROUND"]
