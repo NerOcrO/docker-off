@@ -5,7 +5,6 @@
 
 # How to setup the container
 
-- `netstat -tulpn | grep :80` (free your port 80 please: Apache or Nginx)
 - `sudo apt install git yarn wget tar` (if you don't have it)
 - `./docker/build.sh` (~20 minutes)
 - `echo -e "\n127.0.0.1 openfoodfacts.localhost" | sudo tee -a /etc/hosts`
@@ -39,7 +38,7 @@
 
 - `docker exec -it apache|nginx|mongo bash`
 - `docker logs apache|nginx|mongo`
-- `docker exec -it apache apache2ctl -k restart`
+- `docker exec -it apache apache2ctl -k graceful`
 - `docker exec -it nginx nginx -s reload`
 - `docker exec -it mongo mongo`
 
@@ -66,15 +65,17 @@
 
 # Blocking issue
 
+- supprimer les use doublon ?
+- Pourquoi mon image fait 924Mo ?
+- Avec le port 8081, les images ne s'affichent pas ?
+- list des modules Perl avec dernier commit
 - faire https://github.com/NerOcrO/stack et mettre des versions et taille js/css pour démontrer certaines choses
 - GraphViz2 a encore planté chez William
+-- cat ~/.cpanm/build.log
 
 # Improvements Docker
 
-- Pourquoi 8081 ne fonctionne pas pour static. ?
-- Pourquoi mon image fait 924Mo ?
-- Pourquoi des fois ça rame de ouf ?
--- Sans Apache2::Reload, c'est mieux mais avec htop, je vois que /usr/sbin/apache2 -DFOREGROUND prend tout le CPU
+- Quel user donner au répertoire off ? www-data ou fabien ?
 - https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
 -- revoir 'Use multi-stage builds' et 'Minimize the number of layers'
 - Découpler apache(http?) et perl ?
@@ -101,6 +102,8 @@
 - startup_apache2.pl est lancé deux fois ? car j'ai deux fois les même erreurs
 -- appel I18N.pm(split_tags), IsEmail.pm
 -- puis Tags.pm(opendir DH2...), I18N.pm(split_tags), IsEmail.pm
+-- graceful ne relance qu'une seule fois les erreurs
+- Utilité de manifest.pl ?
 - Extract mkdir out of repo
 - Replace Config2_sample_docker.pm by environement variables
 -- https://12factor.net/config

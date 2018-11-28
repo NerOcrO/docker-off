@@ -26,11 +26,11 @@ services:
     container_name: nginx
     depends_on: [apache]
     ports:
-      - 80:80
+      - 8081:80
     volumes:
+      - type: bind
+        source: ./openfoodfacts-server
+        target: /var/www/html
       - type: bind
         source: ./docker/etc/nginx/conf.d
         target: /etc/nginx/conf.d
-      - type: bind
-        source: ./openfoodfacts-server/logs
-        target: /var/www/html/html/logs

@@ -25,11 +25,13 @@ COPY cpanfile .
 
 RUN cpanm --notest --quiet --installdeps --skip-satisfied .
 
+RUN rm -rf ~/.cpanm
+
 COPY etc/apache2 /etc/apache2
 
 RUN \
-  a2enconf off.conf \
-  && a2ensite off.conf
+  a2enconf -q off.conf \
+  && a2ensite -q off.conf
 
 ENV PERL5LIB=$OFF_ROOT/lib
 ENV OFF_DOCUMENT_ROOT=$OFF_ROOT/html
