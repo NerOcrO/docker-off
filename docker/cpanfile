@@ -1,44 +1,45 @@
-# This file allows to get the last module's version.
+# https://metacpan.org/pod/cpanm
+# http://deb.perl.it/
 
-# Available as Debian packages.
-requires 'Algorithm::Dependency', '== 1.110';
-requires 'Apache2::Reload';
-#requires 'Barcode::ZBar', '== 0.04';
-requires 'Cache::Memcached::Fast';
-requires 'CGI';
-requires 'Clone';
-requires 'Crypt::PasswdMD5';
-requires 'Data::MessagePack', '== 1.00';
-requires 'DateTime';
-requires 'Email::Stuffer';
-requires 'Encode::Detect';
-requires 'File::Find::Rule';
-requires 'Geo::IP';
-requires 'Graphics::Color';
-#requires 'Image::Magick', '== 6.89';
-requires 'JSON';
-requires 'Locale::Maketext::Lexicon';
-requires 'Log::Log4perl';
-requires 'Log::Any';
-requires 'Log::Any::Adapter::Log4perl';
-requires 'Modern::Perl', '== 1.20181021';
-requires 'Module::Install';
+requires 'inc::Module::Install', '== 1.19';                  # Dec 20, 2017
+
+# Available as Debian packages.                              # Latest update
+requires 'Algorithm::Dependency', '== 1.110';                # Dec 20, 2017
+requires 'Apache2::Reload', '== 0.13';                       # May 09, 2015
+requires 'Barcode::ZBar', '== 0.04';                         # Oct 23, 2009
+requires 'Cache::Memcached::Fast', '== 0.25';                # Mar 15, 2017
+requires 'CGI', '== 4.40';                                   # Aug 15, 2018
+requires 'Clone', '== 0.41';                                 # Oct 25, 2018
+requires 'Crypt::PasswdMD5', '== 1.40';                      # Oct 01, 2013
+requires 'Data::MessagePack', '== 1.00';                     # Aug 21, 2016
+requires 'DateTime', '== 1.50';                              # Aug 01, 2018
+requires 'Email::Stuffer', '== 0.017';                       # Mar 11, 2018
+requires 'Encode::Detect', '== 1.01';                        # May 27, 2008
+requires 'File::Find::Rule', '== 0.34';                      # Dec 03, 2015
+requires 'Geo::IP', '== 1.51';                               # Oct 12, 2017
+requires 'Graphics::Color', '== 0.31';                       # Dec 10, 2014
+requires 'Image::Magick';                                    # Sep 21, 2014
+requires 'JSON', '== 2.97001';                               # Dec 21, 2017
+requires 'Log::Log4perl', '== 1.49';                         # Feb 21, 2017
+requires 'Log::Any::Adapter::Log4perl', '== 0.09';           # Apr 22, 2018
+requires 'Modern::Perl', '== 1.20181021';                    # Oct 21, 2018
+requires 'Module::Install', '== 1.19';                       # Dec 20, 2017
 # TODO: Switch to latest version: change all 'count' deprecated method.
-requires 'MongoDB', '== 1.8.3';
-requires 'Text::Unaccent';
-requires 'URI::Escape::XS';
-requires 'URI::Find';
-#requires 'XML::Encoding', '== 2.09';
-requires 'XML::Simple';
+requires 'MongoDB', '== 1.8.3';                              # Jun 25, 2018
+requires 'Text::Unaccent', '== 1.08';                        # Dec 29, 2004
+requires 'URI::Escape::XS', '== 0.14';                       # Jun 09, 2016
+requires 'URI::Find', '== 20160806';                         # Aug 06, 2016
+requires 'XML::Encoding', '== 2.09';                         # May 30, 2014
+requires 'XML::Simple', '== 2.25';                           # Mar 18, 2018
 
 # Not available as Debian packages.
-requires 'Algorithm::CheckDigits';
-requires 'CLDR::Number';
-requires 'Crypt::ScryptKDF';
-requires 'Data::MessagePack';
-requires 'Email::IsEmail';
-requires 'Encode::Punycode';
-requires 'GraphViz2';
-requires 'Image::OCR::Tesseract';
-requires 'Locale::Maketext::Lexicon::Getcontext';
-requires 'Math::Random::Secure';
+requires 'Algorithm::CheckDigits', '== 1.3.2';               # May 16, 2016
+requires 'CLDR::Number', '== 0.19';                          # Apr 06, 2016
+requires 'Crypt::ScryptKDF', '== 0.010';                     # Nov 28, 2015
+requires 'Data::MessagePack', '== 1.00';                     # Aug 21, 2016
+requires 'Email::IsEmail', '== 3.04.8';                      # Oct 01, 2016
+requires 'Encode::Punycode', '== 1.002';                     # Dec 27, 2016
+requires 'GraphViz2', '== 2.47';                             # Feb 23, 2018
+requires 'Image::OCR::Tesseract', '== 1.24';                 # Feb 16, 2010
+requires 'Locale::Maketext::Lexicon::Getcontext', '== 0.05'; # Jan 05, 2018
+requires 'Math::Random::Secure', '== 0.080001';              # Mar 12, 2017

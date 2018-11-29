@@ -26,7 +26,7 @@ services:
     container_name: nginx
     depends_on: [apache]
     ports:
-      - 8081:80
+      - 80:80
     volumes:
       - type: bind
         source: ./openfoodfacts-server

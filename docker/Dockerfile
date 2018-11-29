@@ -1,21 +1,18 @@
 FROM debian:stretch
 
 RUN apt-get update && apt-get install -y \
-    apache2 \
-    cpanminus \
-    g++ \
-    gcc \
-    graphviz \
-    imagemagick \
-    libapache2-mod-perl2 \
-    make \
-    tesseract-ocr \
-    # TODO: Migrate to cpanfile.
-    libbarcode-zbar-perl \
-    libimage-magick-perl \
-    libxml-encoding-perl \
-  && apt-get purge -y --auto-remove \
-  && rm -rf /var/lib/apt/lists/*
+  apache2 \
+  cpanminus \
+  g++ \
+  gcc \
+  graphviz \
+  imagemagick \
+  libapache2-mod-perl2 \
+  libexpat1-dev \
+  libzbar-dev \
+  make \
+  perlmagick \
+  tesseract-ocr
 
 ENV OFF_ROOT=/var/www/html
 
@@ -23,9 +20,16 @@ WORKDIR $OFF_ROOT
 
 COPY cpanfile .
 
-RUN cpanm --notest --quiet --installdeps --skip-satisfied .
+RUN \
+  cpanm --notest --quiet --skip-satisfied --installdeps . \
+  && rm -rf ~/.cpanm /root/.cpanm /usr/src/perl /tmp/*
 
-RUN rm -rf ~/.cpanm
+RUN apt-get remove -y \
+    g++ \
+    gcc \
+    make \
+  && apt-get purge -y --auto-remove \
+  && rm -rf /var/lib/apt/lists/*
 
 COPY etc/apache2 /etc/apache2
 
