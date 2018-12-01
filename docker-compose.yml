@@ -13,6 +13,15 @@ services:
       - 8080:8080
     volumes:
       - type: bind
+        source: ./docker/etc/apache2/conf-enabled
+        target: /etc/apache2/conf-enabled
+      - type: bind
+        source: ./docker/etc/apache2/sites-enabled
+        target: /etc/apache2/sites-enabled
+      - type: bind
+        source: ./docker/etc/apache2/ports.conf
+        target: /etc/apache2/ports.conf
+      - type: bind
         source: ./openfoodfacts-server
         target: /var/www/html
       - type: bind

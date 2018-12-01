@@ -13,48 +13,67 @@
 
 ## Unix
 
+- `netstat -tulpn | grep :80` (free your port 80 please: Apache or Nginx)
 - `sudo apt install git yarn wget tar` (if you don't have it)
 - `./docker/build.sh` (~20 minutes)
-- `echo -e "\n127.0.0.1 openfoodfacts.localhost" | sudo tee -a /etc/hosts`
-- `sudo chown www-data:www-data openfoodfacts-server && sudo chown www-data:www-data openfoodfacts-server/users && sudo chown www-data:www-data openfoodfacts-server/tmp && sudo chown -R www-data:www-data openfoodfacts-server/html/images/products`
 - `docker-compose up`
 - Open a new bash
+- `echo -e "\n127.0.0.1 openfoodfacts.localhost" | sudo tee -a /etc/hosts`
+- `sudo chown -R www-data:www-data openfoodfacts-server openfoodfacts-server/users openfoodfacts-server/tmp openfoodfacts-server/html/images/products`
+- `sudo chown -R www-data:www-data openfoodfacts-server/products && sudo chmod -R 774 openfoodfacts-server/products`
 - `docker exec -it apache ./scripts/build_lang.pl`
 - `docker exec -it apache ./scripts/update_all_products_from_dir_in_mongodb.pl`
-- `sudo chown -R www-data:www-data openfoodfacts-server/products && sudo chmod -R 774 openfoodfacts-server/products`
-- `docker exec -it apache apache2ctl -k restart`
-- transform the symlink html/bower_components by a simple directory
+- `docker exec -it apache apache2ctl -k graceful`
+- Transform the symlink html/bower_components by a simple directory
 
-# Test
+# Usage
 
-## URL
+## URL to test
 
-- http://world.openfoodfacts.localhost:8081 (nginx)
+- http://world.openfoodfacts.localhost (nginx)
 - http://world.openfoodfacts.localhost:8080/cgi/display.pl (Apache)
 
-## Edit CSS/JS
+## Start the containers and see the logs
 
-- `yarn run build`
+`docker-compose up`
 
-## Start the container
+## Start the containers as deamon
 
-- `docker-compose up`
-- `docker-compose up -d` (deamon mode)
+`docker-compose up -d`
 
-# Useful commands for debugging
+## Start the containers with another port
 
-- `docker logs apache|nginx|mongo`
-- `docker exec -it apache|nginx|mongo bash`
-- `docker exec -it apache apache2ctl -k graceful`
-- `docker exec -it nginx nginx -s reload`
-- `docker exec -it mongo mongo`
-- `docker kill apache|nginx|mongo`
+`docker-compose run -p 8082:80 nginx`
 
-# Versions
+## Edit CSS/JS and build them
+
+`yarn run build`
+
+## Build translations
+
+`docker exec -it apache ./scripts/build_lang.pl`
+`docker exec -it apache apache2ctl -k graceful`
+
+## Connect to the container
+
+`docker exec -it apache|nginx|mongo bash`
+
+## Reload a server
+
+`docker exec -it apache apache2ctl -k graceful`
+`docker exec -it nginx nginx -s reload`
+
+## Connect to the mongo database
+
+`docker exec -it mongo mongo`
+
+## Kill a container
+
+`docker kill apache|nginx|mongo`
+
+# Versions used
 
 - `docker --version` : Docker version 18.09.0, build 4d60db4
 - `apache2 -v` : Apache/2.4.25
 - `perl -v` : This is perl 5, version 24, subversion 1 (v5.24.1) built for x86_64-linux-gnu-thread-multi
-- `cpan -D Log::Any` (module version)
-- `cpan -O` (out-of-date modules)
 - https://github.com/openfoodfacts/openfoodfacts-server/network/dependencies  

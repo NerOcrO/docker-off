@@ -7,12 +7,7 @@ git clone git@github.com:openfoodfacts/openfoodfacts-server.git
 
 echo "\033[32m------------------ 2/ Creating directories --------------\033[0m";
 cd openfoodfacts-server
-mkdir logs
-mkdir products
-mkdir users
-mkdir tmp
-mkdir html/data
-mkdir -p html/images/products
+mkdir -p html/data html/images/products logs products tmp users
 
 echo "\033[32m------------------ 3/ File configuration ----------------\033[0m";
 cp lib/ProductOpener/Config2_sample.pm lib/ProductOpener/Config2_sample_docker.pm
