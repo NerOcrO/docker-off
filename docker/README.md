@@ -54,10 +54,6 @@
 `docker exec -it apache ./scripts/build_lang.pl`
 `docker exec -it apache apache2ctl -k graceful`
 
-## Connect to the container
-
-`docker exec -it apache|nginx|mongo bash`
-
 ## Reload a server
 
 `docker exec -it apache apache2ctl -k graceful`
@@ -69,7 +65,7 @@
 
 ## Kill a container
 
-`docker kill apache|nginx|mongo`
+`docker kill apache|nginx|memcached|mongo`
 
 # Versions used
 
