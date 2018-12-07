@@ -1,5 +1,5 @@
 # https://metacpan.org/pod/cpanm
-# http://deb.perl.it/
+# https://deb.perl.it/
 
 # Available as Debian packages.                              # Latest update
 requires 'Algorithm::Dependency', '== 1.110';                # Dec 20, 2017
@@ -21,9 +21,10 @@ requires 'JSON', '== 2.97001';                               # Dec 21, 2017
 requires 'Log::Any::Adapter::Log4perl', '== 0.09';           # Apr 22, 2018
 requires 'Modern::Perl', '== 1.20181021';                    # Oct 21, 2018
 requires 'Module::Install', '== 1.19';                       # Dec 20, 2017
-# TODO: Switch to latest version: change all 'count' deprecated method.
+# TODO: Switch to the latest version: change all 'count' deprecated method.
 requires 'MongoDB', '== 1.8.3';                              # Jun 25, 2018
 requires 'Text::Unaccent', '== 1.08';                        # Dec 29, 2004
+requires 'Test::Number::Delta', '== 1.06';                   # Nov 25, 2014
 requires 'URI::Escape::XS', '== 0.14';                       # Jun 09, 2016
 requires 'URI::Find', '== 20160806';                         # Aug 06, 2016
 requires 'XML::Encoding', '== 2.09';                         # May 30, 2014

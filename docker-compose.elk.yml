@@ -1,0 +1,46 @@
+version: "3.7"
+services:
+  elasticsearch:
+    image: elasticsearch:6.5.1
+    container_name: elasticsearch
+    ports:
+      - target: 9200
+        published: ${OFF_ELASTICSEARCH_PORT_PUBLISHED}
+  kibana:
+    image: kibana:6.5.1
+    container_name: kibana
+    depends_on:
+      - elasticsearch
+    ports:
+      - target: 5601
+        published: ${OFF_KIBANA_PORT_PUBLISHED}
+  logstash:
+    image: logstash:6.5.1
+    container_name: logstash
+    depends_on:
+      - elasticsearch
+    volumes:
+      - type: bind
+        source: ./docker/logstash/pipeline
+        target: /usr/share/logstash/pipeline
+    ports:
+      - target: 5000
+        published: ${OFF_LOGSTASH_PORT_PUBLISHED}
+        protocol: udp
+  mongo:
+    depends_on:
+      - logstash
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:${OFF_LOGSTASH_PORT_PUBLISHED}
+  apache:
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:${OFF_LOGSTASH_PORT_PUBLISHED}
+  nginx:
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:${OFF_LOGSTASH_PORT_PUBLISHED}

@@ -1,8 +1,8 @@
 FROM debian:stretch-slim
 
-ENV OFF_ROOT=/var/www/html
+ARG off_root
 
-WORKDIR $OFF_ROOT
+WORKDIR $off_root
 
 COPY cpanfile .
 
@@ -15,28 +15,27 @@ RUN apt-get update && apt-get install -y \
     graphviz \
     imagemagick \
     libapache2-mod-perl2 \
+    libapache2-mod-php \
     libexpat1-dev \
     libzbar-dev \
     make \
     perlmagick \
     tesseract-ocr \
+    wget \
   && cpanm --notest --quiet --skip-satisfied inc::Module::Install@1.19 \
   && cpanm --notest --quiet --skip-satisfied --installdeps . \
+  && cd .. \
+  && wget https://github.com/elijaa/phpmemcachedadmin/archive/1.3.0.tar.gz \
+  && tar -xvzf 1.3.0.tar.gz \
+  && rm 1.3.0.tar.gz \
+  && chmod -R +rx phpmemcachedadmin-1.3.0/* \
+  && chmod 777 phpmemcachedadmin-1.3.0/Temp phpmemcachedadmin-1.3.0/stats.php \
   && apt-get remove -y \
     g++ \
     gcc \
     make \
+    wget \
   && apt-get purge -y --auto-remove \
   && rm -rf /var/lib/apt/lists/* ~/.cpanm /root/.cpanm /usr/src/perl /tmp/*
-
-ENV PERL5LIB=$OFF_ROOT/lib
-ENV OFF_DOCUMENT_ROOT=$OFF_ROOT/html
-ENV OFF_SERVER_NAME=openfoodfacts.localhost:8081
-ENV OFF_SSL_SUBDOMAINS=*
-ENV OFF_MONGODB_USER=off
-ENV OFF_MONGODB_HOST=mongodb://mongo
-ENV OFF_MEMCACHE_SERVERS=memcached:11211
-ENV OFF_APACHE_PORT=8080
-ENV OFF_SERVER_ADMIN=contact@openfoodfacts.org
 
 ENTRYPOINT ["apache2ctl", "-DFOREGROUND"]

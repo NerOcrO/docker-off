@@ -1,51 +1,76 @@
 version: "3.7"
 services:
-  memcached:
-    image: memcached:1.5-alpine
-    container_name: memcached
-    ports:
-      - 11211:11211
   mongo:
     image: mongo:4.0
     container_name: mongo
-    depends_on: [memcached]
     ports:
-      - 27017:27017
+      - target: 27017
+        published: ${OFF_MONGO_PORT_PUBLISHED}
   apache:
-    build: docker
+    build:
+      context: docker/apache
+      args:
+        - off_root=${OFF_ROOT}
     container_name: apache
-    depends_on: [mongo]
+    depends_on:
+      - mongo
+    environment:
+      - OFF_ROOT=${OFF_ROOT}
+      - PERL5LIB=${OFF_ROOT}/lib
+      - OFF_DOCUMENT_ROOT=${OFF_ROOT}/html
+      - OFF_APACHE_PORT=${OFF_APACHE_PORT}
+      - OFF_SERVER_NAME=${OFF_SERVER_NAME}
+      - OFF_SSL_SUBDOMAINS=${OFF_SSL_SUBDOMAINS}
+      - OFF_MONGODB_USER=${OFF_MONGODB_USER}
+      - OFF_MONGODB_HOST=${OFF_MONGODB_HOST}
+      - OFF_MEMCACHE_SERVERS=${OFF_MEMCACHE_SERVERS}
+      - OFF_PHPMEMCACHEDADMIN_PORT=${OFF_PHPMEMCACHEDADMIN_PORT}
+      - OFF_SERVER_ADMIN=${OFF_SERVER_ADMIN}
     ports:
-      - 8080:8080
+      - target: ${OFF_APACHE_PORT}
+        published: ${OFF_APACHE_PORT_PUBLISHED}
+      - target: 8082
+        published: ${OFF_PHPMEMCACHEDADMIN_PORT_PUBLISHED}
     volumes:
       - type: bind
-        source: ./docker/etc/apache2/conf-enabled
+        source: ./docker/apache/etc/apache2/conf-enabled
         target: /etc/apache2/conf-enabled
       - type: bind
-        source: ./docker/etc/apache2/sites-enabled
+        source: ./docker/apache/etc/apache2/sites-enabled
         target: /etc/apache2/sites-enabled
       - type: bind
-        source: ./docker/etc/apache2/ports.conf
+        source: ./docker/apache/etc/apache2/ports.conf
         target: /etc/apache2/ports.conf
       - type: bind
+        source: ./docker/phpmemcachedadmin-1.3.0/Config
+        target: /var/www/phpmemcachedadmin-1.3.0/Config
+      - type: bind
         source: ./openfoodfacts-server
-        target: /var/www/html
+        target: ${OFF_ROOT}
       - type: bind
         source: ./openfoodfacts-server/lib/ProductOpener/Config_off.pm
-        target: /var/www/html/lib/ProductOpener/Config.pm
+        target: ${OFF_ROOT}/lib/ProductOpener/Config.pm
       - type: bind
         source: ./openfoodfacts-server/lib/ProductOpener/Config2_sample_docker.pm
-        target: /var/www/html/lib/ProductOpener/Config2.pm
+        target: ${OFF_ROOT}/lib/ProductOpener/Config2.pm
   nginx:
-    image: nginx:1.15-alpine
+    image: nginx:1.15
     container_name: nginx
-    depends_on: [apache]
+    depends_on:
+      - apache
     ports:
-      - 8081:80
+      - target: ${OFF_NGINX_PORT}
+        published: ${OFF_NGINX_PORT_PUBLISHED}
     volumes:
       - type: bind
-        source: ./openfoodfacts-server
-        target: /var/www/html
+        source: ./openfoodfacts-server/html
+        target: ${OFF_ROOT}/html
       - type: bind
-        source: ./docker/etc/nginx/conf.d
+        source: ./docker/nginx/etc/nginx/conf.d
         target: /etc/nginx/conf.d
+    environment:
+      - DOLLAR=${DOLLAR}
+      - OFF_APACHE_PORT=${OFF_APACHE_PORT}
+      - OFF_DOCUMENT_ROOT=${OFF_ROOT}/html
+      - OFF_NGINX_PORT=${OFF_NGINX_PORT}
+    command: /bin/bash -c "envsubst < /etc/nginx/conf.d/off-proxy.template > /etc/nginx/conf.d/off-proxy.conf && nginx -g 'daemon off;'"

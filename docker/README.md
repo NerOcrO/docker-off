@@ -13,7 +13,6 @@
 
 ## Unix
 
-- `netstat -tulpn | grep :80` (free your port 80 please: Apache or Nginx)
 - `sudo apt install git yarn wget tar` (if you don't have it)
 - `./docker/build.sh` (~20 minutes)
 - `docker-compose up`
@@ -30,8 +29,11 @@
 
 ## URL to test
 
-- http://world.openfoodfacts.localhost (nginx)
+- http://world.openfoodfacts.localhost:8081/ (Nginx)
 - http://world.openfoodfacts.localhost:8080/cgi/display.pl (Apache)
+- http://localhost:5601/ (Kibana)
+- http://localhost:9200/ (Elasticsearch)
+- http://localhost:8082/ (PHPMemcachedAdmin)
 
 ## Start the containers and see the logs
 
@@ -43,29 +45,43 @@
 
 ## Start the containers with another port
 
-`docker-compose run -p 8082:80 nginx`
+`OFF_NGINX_PORT_PUBLISHED=8083 docker-compose up`
 
-## Edit CSS/JS and build them
+## Start the containers with Memcached
 
-`yarn run build`
+`docker-compose -f docker-compose.yml -f docker-compose.memcached.yml up`
 
-## Build translations
+## Start the containers with ElasticsearchLogstashKibana
 
-`docker exec -it apache ./scripts/build_lang.pl`
-`docker exec -it apache apache2ctl -k graceful`
+If you want to use ELK: [update your vm.max_map_count before](https://elk-docker.readthedocs.io/#prerequisites).
+
+`docker-compose -f docker-compose.yml -f docker-compose.elk.yml up`
 
 ## Reload a server
 
 `docker exec -it apache apache2ctl -k graceful`
 `docker exec -it nginx nginx -s reload`
 
-## Connect to the mongo database
+## Connect to the Mongo database
 
 `docker exec -it mongo mongo`
 
 ## Kill a container
 
 `docker kill apache|nginx|memcached|mongo`
+
+## Build translations
+
+`docker exec -it apache ./scripts/build_lang.pl`
+`docker exec -it apache apache2ctl -k graceful`
+
+## Run a test
+
+`docker exec -it apache perl t/[TEST_FILENAME].t`
+
+## Edit CSS/JS and build them
+
+`yarn run build`
 
 # Versions used
 

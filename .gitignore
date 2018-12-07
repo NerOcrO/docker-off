@@ -1,1 +1,2 @@
 openfoodfacts-server
+docker/nginx/etc/nginx/conf.d/off-proxy.conf

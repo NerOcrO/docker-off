@@ -1,0 +1,11 @@
+version: "3.7"
+services:
+  memcached:
+    image: memcached:1.5-alpine
+    container_name: memcached
+    ports:
+      - target: 11211
+        published: ${OFF_MEMCACHED_SERVER_ONE_PORT_PUBLISHED}
+  mongo:
+    depends_on:
+      - memcached
