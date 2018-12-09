@@ -13,7 +13,7 @@
 
 ## Unix
 
-- `sudo apt install git yarn wget tar` (if you don't have it)
+- `sudo apt install git yarn wget tar nodejs` (if you don't have it) (node < 11)
 - `./docker/build.sh` (~20 minutes)
 - `docker-compose up`
 - Open a new bash
