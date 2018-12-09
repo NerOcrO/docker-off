@@ -10,6 +10,9 @@ services:
       - type: bind
         source: ./docker/mongo
         target: /etc/mongo
+      - type: bind
+        source: ./openfoodfacts-server/html/data/mongo
+        target: /data/db
     command: --config /etc/mongo/mongod.conf
   apache:
     build:
