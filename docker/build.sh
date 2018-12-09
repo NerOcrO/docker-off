@@ -2,6 +2,13 @@
 
 set -e
 
+# Mac OS needs gsed.
+if [ $(uname) == "Darwin" ]; then
+  sed=gsed
+else
+  sed=sed
+fi
+
 echo "\033[32m------------------ 1/ Cloning OFF -----------------------\033[0m";
 git clone git@github.com:openfoodfacts/openfoodfacts-server.git
 
@@ -11,20 +18,20 @@ mkdir -p html/data html/images/products logs products tmp users
 
 echo "\033[32m------------------ 3/ File configuration ----------------\033[0m";
 cp lib/ProductOpener/Config2_sample.pm lib/ProductOpener/Config2_sample_docker.pm
-sed -i \
+$sed -i \
   -e 's|$server_domain = "openfoodfacts.org";|$server_domain = "openfoodfacts.localhost:8081";|' \
   -e 's|"/home/off/html"|"/var/www/html/html"|' \
   -e 's|"/home/off"|"/var/www/html"|' \
   -e 's|"mongodb://localhost"|"mongodb://mongo"|' \
   -e 's|"127.0.0.1:11211"|"memcached:11211"|' \
+  -e 's|*|no|' \
+  lib/ProductOpener/Config2_sample_docker.pm
   # -e 's|$server_domain = "openfoodfacts.org";|$server_domain = $ENV{"OFF_SERVER_NAME"};|' \
   # -e 's|"/home/off/html"|$ENV{"OFF_DOCUMENT_ROOT"}|' \
   # -e 's|"/home/off"|$ENV{"OFF_ROOT"}|' \
   # -e 's|"off"|$ENV{"OFF_MONGODB_USER"}|' \
   # -e 's|"mongodb://localhost"|$ENV{"OFF_MONGODB_HOST"}|' \
   # -e 's|"127.0.0.1:11211"|$ENV{"OFF_MEMCACHE_SERVERS"}|' \
-  -e 's|*|no|' \
-  lib/ProductOpener/Config2_sample_docker.pm
 
 echo "\033[32m------------------ 4/ Retrieve products -----------------\033[0m";
 wget https://static.openfoodfacts.org/exports/39-.tar.gz
