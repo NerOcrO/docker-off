@@ -6,6 +6,11 @@ services:
     ports:
       - target: 27017
         published: ${OFF_MONGO_PORT_PUBLISHED}
+    volumes:
+      - type: bind
+        source: ./docker/mongo
+        target: /etc/mongo
+    command: --config /etc/mongo/mongod.conf
   apache:
     build:
       context: docker/apache
@@ -14,18 +19,6 @@ services:
     container_name: apache
     depends_on:
       - mongo
-    environment:
-      - OFF_ROOT=${OFF_ROOT}
-      - PERL5LIB=${OFF_ROOT}/lib
-      - OFF_DOCUMENT_ROOT=${OFF_ROOT}/html
-      - OFF_APACHE_PORT=${OFF_APACHE_PORT}
-      - OFF_SERVER_NAME=${OFF_SERVER_NAME}
-      - OFF_SSL_SUBDOMAINS=${OFF_SSL_SUBDOMAINS}
-      - OFF_MONGODB_USER=${OFF_MONGODB_USER}
-      - OFF_MONGODB_HOST=${OFF_MONGODB_HOST}
-      - OFF_MEMCACHE_SERVERS=${OFF_MEMCACHE_SERVERS}
-      - OFF_PHPMEMCACHEDADMIN_PORT=${OFF_PHPMEMCACHEDADMIN_PORT}
-      - OFF_SERVER_ADMIN=${OFF_SERVER_ADMIN}
     ports:
       - target: ${OFF_APACHE_PORT}
         published: ${OFF_APACHE_PORT_PUBLISHED}
@@ -53,6 +46,18 @@ services:
       - type: bind
         source: ./openfoodfacts-server/lib/ProductOpener/Config2_sample_docker.pm
         target: ${OFF_ROOT}/lib/ProductOpener/Config2.pm
+    environment:
+      - OFF_ROOT=${OFF_ROOT}
+      - PERL5LIB=${OFF_ROOT}/lib
+      - OFF_DOCUMENT_ROOT=${OFF_ROOT}/html
+      - OFF_APACHE_PORT=${OFF_APACHE_PORT}
+      - OFF_SERVER_NAME=${OFF_SERVER_NAME}
+      - OFF_SSL_SUBDOMAINS=${OFF_SSL_SUBDOMAINS}
+      - OFF_MONGODB_USER=${OFF_MONGODB_USER}
+      - OFF_MONGODB_HOST=${OFF_MONGODB_HOST}
+      - OFF_MEMCACHE_SERVERS=${OFF_MEMCACHE_SERVERS}
+      - OFF_PHPMEMCACHEDADMIN_PORT=${OFF_PHPMEMCACHEDADMIN_PORT}
+      - OFF_SERVER_ADMIN=${OFF_SERVER_ADMIN}
   nginx:
     image: nginx:1.15
     container_name: nginx
