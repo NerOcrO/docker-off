@@ -13,23 +13,18 @@
 
 ## Unix
 
-- `sudo apt install git yarn wget tar nodejs` (if you don't have it) (node < 11)
+- `sudo apt install git yarn nodejs` (if you don't have it) (node < 11)
 - `./docker/build.sh` (~20 minutes)
 - `docker-compose up`
 - Open a new bash
-- `echo -e "\n127.0.0.1 openfoodfacts.localhost" | sudo tee -a /etc/hosts`
-- `sudo chown -R www-data:www-data openfoodfacts-server openfoodfacts-server/users openfoodfacts-server/tmp openfoodfacts-server/html/images/products`
-- `sudo chown -R www-data:www-data openfoodfacts-server/products && sudo chmod -R 774 openfoodfacts-server/products`
-- `docker exec -it apache ./scripts/build_lang.pl`
-- `docker exec -it apache ./scripts/update_all_products_from_dir_in_mongodb.pl`
-- `docker exec -it apache apache2ctl -k graceful`
-- `rm openfoodfacts-server/html/bower_components && cp -r openfoodfacts-server/node_modules/@bower_components openfoodfacts-server/html/bower_components`
+- `echo -e "\n127.0.0.1 openfoodfacts.localhost world.openfoodfacts.localhost fr.openfoodfacts.localhost" | sudo tee -a /etc/hosts`
+- `docker exec -it apache /opt/init.sh`
 
 # Usage
 
 ## URL to test
 
-- http://world.openfoodfacts.localhost:8081/ (Nginx)
+- http://world.openfoodfacts.localhost/ (Nginx)
 - http://world.openfoodfacts.localhost:8080/cgi/display.pl (Apache)
 - http://localhost:5601/ (Kibana)
 - http://localhost:9200/ (Elasticsearch)

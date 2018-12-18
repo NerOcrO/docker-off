@@ -10,8 +10,8 @@ services:
       - type: bind
         source: ./docker/mongo
         target: /etc/mongo
-      - type: bind
-        source: ./openfoodfacts-server/html/data/mongo
+      - type: volume
+        source: mongo
         target: /data/db
     command: --config /etc/mongo/mongod.conf
   apache:
@@ -43,6 +43,21 @@ services:
       - type: bind
         source: ./openfoodfacts-server
         target: ${OFF_ROOT}
+      - type: volume
+        source: images_products
+        target: ${OFF_ROOT}/html/images/products
+      - type: volume
+        source: logs
+        target: ${OFF_ROOT}/logs
+      - type: volume
+        source: products
+        target: ${OFF_ROOT}/products
+      - type: volume
+        source: tmp
+        target: ${OFF_ROOT}/tmp
+      - type: volume
+        source: users
+        target: ${OFF_ROOT}/users
       - type: bind
         source: ./openfoodfacts-server/lib/ProductOpener/Config_off.pm
         target: ${OFF_ROOT}/lib/ProductOpener/Config.pm
@@ -62,7 +77,7 @@ services:
       - OFF_PHPMEMCACHEDADMIN_PORT=${OFF_PHPMEMCACHEDADMIN_PORT}
       - OFF_SERVER_ADMIN=${OFF_SERVER_ADMIN}
   nginx:
-    image: nginx:1.15
+    image: nginx:1.15-alpine
     container_name: nginx
     depends_on:
       - apache
@@ -76,9 +91,21 @@ services:
       - type: bind
         source: ./docker/nginx/etc/nginx/conf.d
         target: /etc/nginx/conf.d
+      - type: volume
+        source: images_products
+        target: ${OFF_ROOT}/html/images/products
     environment:
       - DOLLAR=${DOLLAR}
       - OFF_APACHE_PORT=${OFF_APACHE_PORT}
       - OFF_DOCUMENT_ROOT=${OFF_ROOT}/html
       - OFF_NGINX_PORT=${OFF_NGINX_PORT}
-    command: /bin/bash -c "envsubst < /etc/nginx/conf.d/off-proxy.template > /etc/nginx/conf.d/off-proxy.conf && nginx -g 'daemon off;'"
+      - OFF_SERVER_NAME=${OFF_SERVER_NAME}
+    command: /bin/sh -c "envsubst < /etc/nginx/conf.d/off-proxy.template > /etc/nginx/conf.d/off-proxy.conf && nginx -g 'daemon off;'"
+volumes:
+  mongo:
+  images_products:
+  logs:
+  products:
+  tmp:
+  users:
+  users_emails:

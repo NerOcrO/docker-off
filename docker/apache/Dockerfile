@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
     cpanminus \
     g++ \
     gcc \
+    geoip-bin \
     graphviz \
     imagemagick \
     libapache2-mod-perl2 \
@@ -34,8 +35,11 @@ RUN apt-get update && apt-get install -y \
     g++ \
     gcc \
     make \
-    wget \
   && apt-get purge -y --auto-remove \
-  && rm -rf /var/lib/apt/lists/* ~/.cpanm /root/.cpanm /usr/src/perl /tmp/*
+  && rm -rf /var/lib/apt/lists/* ~/.cpanm /root/.cpanm /usr/src/perl /tmp/* \
+  && mkdir -p html/images/products logs products tmp users \
+  && ln -s /usr/share/GeoIP /usr/local/share/GeoIP
+
+COPY init.sh /opt
 
 ENTRYPOINT ["apache2ctl", "-DFOREGROUND"]

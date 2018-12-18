@@ -4,13 +4,13 @@
 
 # Redirect without "www".
 server {
-  server_name openfoodfacts.localhost openfoodfacts.net openfoodfacts.org;
+  server_name ${OFF_SERVER_NAME} openfoodfacts.net openfoodfacts.org;
 
   return 301 ${DOLLAR}scheme://world.${DOLLAR}server_name${DOLLAR}request_uri;
 }
 
 server {
-  server_name *.openfoodfacts.localhost *.openfoodfacts.net *.openfoodfacts.org;
+  server_name *.${OFF_SERVER_NAME} *.openfoodfacts.net *.openfoodfacts.org;
 
   listen ${OFF_NGINX_PORT};
 
