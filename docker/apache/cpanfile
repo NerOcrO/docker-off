@@ -2,6 +2,8 @@
 # https://deb.perl.it/
 
 # Available as Debian packages.                              # Latest update
+requires 'Action::CircuitBreaker';                           # May 14, 2018
+requires 'Action::Retry';                                    # May 21, 2014
 requires 'Algorithm::Dependency', '== 1.110';                # Dec 20, 2017
 requires 'Apache2::Reload', '== 0.13';                       # May 09, 2015
 requires 'Barcode::ZBar', '== 0.04';                         # Oct 23, 2009

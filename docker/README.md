@@ -17,7 +17,7 @@
 - `./docker/build.sh` (~20 minutes)
 - `docker-compose up`
 - Open a new bash
-- `echo -e "\n127.0.0.1 openfoodfacts.localhost world.openfoodfacts.localhost fr.openfoodfacts.localhost" | sudo tee -a /etc/hosts`
+- `echo -e "\n127.0.0.1 openfoodfacts.localhost static.openfoodfacts.localhost world.openfoodfacts.localhost fr.openfoodfacts.localhost" | sudo tee -a /etc/hosts`
 - `docker exec -it apache /opt/init.sh`
 
 # Usage
@@ -81,6 +81,18 @@ If you want to use ELK: [update your vm.max_map_count before](https://elk-docker
 ## Simulate many connection
 
 `docker exec -it apache ab -c 20 -n 1000 http://localhost:8080/`
+
+## Remove all processes
+
+`docker container prune`
+
+## Remove all volumes
+
+`docker volume prune`
+
+## Remove all containers
+
+`docker rmi $(docker images -q)`
 
 # Versions used
 
