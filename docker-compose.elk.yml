@@ -6,6 +6,8 @@ services:
     ports:
       - target: 9200
         published: ${OFF_ELASTICSEARCH_PORT_PUBLISHED}
+    environment:
+      - TZ=${OFF_TZ}
   kibana:
     image: kibana:6.5.1
     container_name: kibana
@@ -14,19 +16,23 @@ services:
     ports:
       - target: 5601
         published: ${OFF_KIBANA_PORT_PUBLISHED}
+    environment:
+      - TZ=${OFF_TZ}
   logstash:
     image: logstash:6.5.1
     container_name: logstash
     depends_on:
       - elasticsearch
-    volumes:
-      - type: bind
-        source: ./docker/logstash/pipeline
-        target: /usr/share/logstash/pipeline
     ports:
       - target: 5000
         published: ${OFF_LOGSTASH_PORT_PUBLISHED}
         protocol: udp
+    volumes:
+      - type: bind
+        source: ./docker/logstash/pipeline
+        target: /usr/share/logstash/pipeline
+    environment:
+      - TZ=${OFF_TZ}
   mongo:
     depends_on:
       - logstash

@@ -6,6 +6,8 @@ services:
     ports:
       - target: 11211
         published: ${OFF_MEMCACHED_SERVER_ONE_PORT_PUBLISHED}
+    environment:
+      - TZ=${OFF_TZ}
   mongo:
     depends_on:
       - memcached
