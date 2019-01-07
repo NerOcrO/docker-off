@@ -21,6 +21,9 @@ Docker provide an isolated environnement, very close to a Virtual Machine. This 
 
 This instructions build the environement. If every commands end well, they don't have to be repeated.
 - `sudo apt install git yarn nodejs` (if you don't have it) (node < 11)
+- `mkdir -p /path/you/want`
+- `cd /path/you/want`
+- `git clone https://github.com/NerOcrO/docker-off.git . # don't forget the "." at the end`
 - `./docker/build.sh` (~20 minutes)
 - `docker-compose up`
 - Open a new bash
@@ -40,7 +43,8 @@ The Open Food Facts server is ready to use. **URL to test:**
 
 After the setup, if you reboot your computer or kill the countainers process, you will have to restart at least the 3 containers needed for Open Food Facts:
 
-`docker-compose up`
+- `cd /path/you/want`
+- `docker-compose up`
 
 The Open Food Facts is ready to use again. The terminal can be closed but we suggest to keep it to read log informations.
 
@@ -49,6 +53,8 @@ There is two ways if you want to launch scripts "inside" the container:
 2. `docket exec -it apache bash`
 
 The second option open a bash environement inside the container.
+
+You can modify the server sources inside `/path/you/want/openfoodfacts-server/`.
 
 # Advanced usages
 
