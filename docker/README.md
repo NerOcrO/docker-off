@@ -1,3 +1,12 @@
+# Why and what is Docker
+
+Docker is the easiest way to install the Open Food Facts server, play with it, and even modify the code.
+
+Docker provide an isolated environnement, very close to a Virtual Machine. This environnement contains everything needed to launch the Open Food Facts server. There IS NO NEED TO INSTALL Perl, Perl modules, nor Nginx nor Apache.
+
+- https://www.docker.com/get-started (en)
+- https://www.youtube.com/watch?v=XgKOC6X8W28 (fr)
+
 # Install Docker
 
 - Docker CE: https://docs.docker.com/install/#supported-platforms
@@ -13,16 +22,18 @@
 
 ## Unix
 
+This instructions build the environement. If every commands end well, they don't have to be repeated.
+
 - `sudo apt install git yarn nodejs` (if you don't have it) (node < 11)
 - `./docker/build.sh` (~20 minutes)
 - `docker-compose up`
 - Open a new bash
 - `echo -e "\n127.0.0.1 openfoodfacts.localhost static.openfoodfacts.localhost world.openfoodfacts.localhost fr.openfoodfacts.localhost" | sudo tee -a /etc/hosts`
-- `docker exec -it apache /opt/init.sh`
+- `docker exec -it apache /opt/init.sh` (install a test database with 117 products)
 
-# Usage
+# Basic usage
 
-## URL to test
+## The Open Food Facts server is ready to use. **URL to test**
 
 - http://world.openfoodfacts.localhost/ (Nginx)
 - http://world.openfoodfacts.localhost:8080/cgi/display.pl (Apache)
@@ -30,9 +41,22 @@
 - http://localhost:9200/ (Elasticsearch)
 - http://localhost:8082/ (PHPMemcachedAdmin)
 
-## Start the containers and see the logs
+After the setup, if you reboot your computer or kill the containers process, you will have to restart at least the 3 containers needed for Open Food Facts:
 
-`docker-compose up`
+- `cd /path/towards/docker-off`
+- `docker-compose up`
+
+The Open Food Facts is ready to use again. The terminal can be closed but we suggest to keep it to read log informations.
+
+There is two ways if you want to launch scripts "inside" the container:
+
+- `docker exec -it apache [path_and_name_of_the_script]`
+- `docket exec -it apache bash`
+
+The second option open a bash environement inside the container.
+You can modify the server sources inside `/path/towards/docker-off/openfoodfacts-server/`.
+
+# Advanced usages
 
 ## Start the containers as deamon
 
