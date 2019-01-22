@@ -84,9 +84,8 @@ If you want to use ELK: [update your vm.max_map_count before](https://elk-docker
 
 ## Reload a server
 
-`docker exec -it apache apache2ctl -k graceful`
-
-`docker exec -it nginx nginx -s reload`
+- `docker exec -it apache apache2ctl -k graceful`
+- `docker exec -it nginx nginx -s reload`
 
 ## Connect to the Mongo database
 
@@ -98,9 +97,8 @@ If you want to use ELK: [update your vm.max_map_count before](https://elk-docker
 
 ## Build translations
 
-`docker exec -it apache ./scripts/build_lang.pl`
-
-`docker exec -it apache apache2ctl -k graceful`
+- `docker exec -it apache ./scripts/build_lang.pl`
+- `docker exec -it apache apache2ctl -k graceful`
 
 ## Run a test
 
