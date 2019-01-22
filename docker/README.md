@@ -4,19 +4,26 @@ Docker is the easiest way to install the Open Food Facts server, play with it, a
 
 Docker provide an isolated environnement, very close to a Virtual Machine. This environnement contains everything needed to launch the Open Food Facts server. There IS NO NEED TO INSTALL Perl, Perl modules, nor Nginx nor Apache.
 
-- https://www.docker.com/get-started (en)
-- https://www.youtube.com/watch?v=XgKOC6X8W28 (fr)
+- [Get started with Docker](https://www.docker.com/get-started)
+- [Qu'est-ce que Docker et comment l'utiliser](https://www.youtube.com/watch?v=XgKOC6X8W28)
 
 # Install Docker
 
-- Docker CE: https://docs.docker.com/install/#supported-platforms
-- Docker Compose: https://docs.docker.com/compose/install/
+- [Docker CE](https://docs.docker.com/install/#supported-platforms)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
 # Documentations
 
-- https://docs.docker.com/reference/ (CLI)
-- https://docs.docker.com/engine/reference/builder/ (Dockerfile)
-- https://docs.docker.com/compose/compose-file/ (docker-compose)
+- [CLI](https://docs.docker.com/reference/)
+- [Dockerfile](https://docs.docker.com/engine/reference/builder/)
+- [docker-compose](https://docs.docker.com/compose/compose-file/)
+
+# Prerequisite
+
+- [GIT](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- [Yarn](https://yarnpkg.com/lang/en/docs/install/)
+- [Node.js](https://nodejs.org/en/download/package-manager/) (version < 11)
+- SSH and [a public key to your GitHub account](https://help.github.com/articles/which-remote-url-should-i-use/#cloning-with-ssh-urls)
 
 # How to setup the container
 
@@ -24,7 +31,6 @@ Docker provide an isolated environnement, very close to a Virtual Machine. This 
 
 This instructions build the environement. If every commands end well, they don't have to be repeated.
 
-- `sudo apt install git yarn nodejs` (if you don't have it) (node < 11)
 - `./docker/build.sh` (~20 minutes)
 - `docker-compose up`
 - Open a new bash
