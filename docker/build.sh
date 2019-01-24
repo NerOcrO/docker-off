@@ -14,7 +14,7 @@ git clone git@github.com:openfoodfacts/openfoodfacts-server.git
 
 echo "\033[32m------------------ 2/ File configuration ----------------\033[0m";
 cd openfoodfacts-server
-cp lib/ProductOpener/Config2_sample.pm lib/ProductOpener/Config2_sample_docker.pm
+cp lib/ProductOpener/Config2_sample.pm lib/ProductOpener/Config2.pm
 $sed -i \
   -e 's|$server_domain = "openfoodfacts.org";|$server_domain = "openfoodfacts.localhost";|' \
   -e 's|"/home/off/html"|"/var/www/html/html"|' \
@@ -22,7 +22,7 @@ $sed -i \
   -e 's|"mongodb://localhost"|"mongodb://mongo"|' \
   -e 's|"127.0.0.1:11211"|"memcached:11211"|' \
   -e 's|*|no|' \
-  lib/ProductOpener/Config2_sample_docker.pm
+  lib/ProductOpener/Config2.pm
   # -e 's|$server_domain = "openfoodfacts.org";|$server_domain = $ENV{"OFF_SERVER_NAME"};|' \
   # -e 's|"/home/off/html"|$ENV{"OFF_ROOT"}/html|' \
   # -e 's|"/home/off"|$ENV{"OFF_ROOT"}|' \

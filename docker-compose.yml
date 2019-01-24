@@ -63,9 +63,6 @@ services:
       - type: bind
         source: ./openfoodfacts-server/lib/ProductOpener/Config_off.pm
         target: ${OFF_ROOT}/lib/ProductOpener/Config.pm
-      - type: bind
-        source: ./openfoodfacts-server/lib/ProductOpener/Config2_sample_docker.pm
-        target: ${OFF_ROOT}/lib/ProductOpener/Config2.pm
     environment:
       - OFF_ROOT=${OFF_ROOT}
       - PERL5LIB=${OFF_ROOT}/lib
