@@ -11,6 +11,7 @@ Docker provide an isolated environnement, very close to a Virtual Machine. This 
 
 - [Docker CE](https://docs.docker.com/install/#supported-platforms)
 - [Docker Compose](https://docs.docker.com/compose/install/)
+- [Command-line completion](https://docs.docker.com/compose/completion/)
 
 # Documentations
 
