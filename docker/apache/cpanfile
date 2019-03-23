@@ -17,6 +17,7 @@ requires 'Email::Stuffer', '== 0.017';                       # Mar 11, 2018
 requires 'Encode::Detect', '== 1.01';                        # May 27, 2008
 requires 'File::Find::Rule', '== 0.34';                      # Dec 03, 2015
 requires 'Geo::IP', '== 1.51';                               # Oct 12, 2017
+requires 'GeoIP2::Database::Reader', '== 2.006001';          # Sep 08, 2018
 requires 'Graphics::Color', '== 0.31';                       # Dec 10, 2014
 requires 'Image::Magick';                                    # Sep 21, 2014
 requires 'JSON', '== 2.97001';                               # Dec 21, 2017
