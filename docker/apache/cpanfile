@@ -38,7 +38,7 @@ requires 'Algorithm::CheckDigits', '== 1.3.2';               # May 16, 2016
 requires 'CLDR::Number', '== 0.19';                          # Apr 06, 2016
 requires 'Crypt::ScryptKDF', '== 0.010';                     # Nov 28, 2015
 requires 'Data::MessagePack', '== 1.00';                     # Aug 21, 2016
-requires 'Email::IsEmail', '== 3.04.8';                      # Oct 01, 2016
+requires 'Email::Valid', '>= 1.202, < 2.0';
 requires 'Encode::Punycode', '== 1.002';                     # Dec 27, 2016
 requires 'GraphViz2', '== 2.47';                             # Feb 23, 2018
 requires 'Image::OCR::Tesseract', '== 1.24';                 # Feb 16, 2010
